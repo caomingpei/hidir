@@ -1,4 +1,4 @@
-# **my-package**
+# **HiDir**
 
 ```{toctree}
 :maxdepth: 2
@@ -15,8 +15,8 @@ overview
 
 CHANGELOG
 CONTRIBUTING
-License <https://raw.githubusercontent.com/allenai/python-package-template/main/LICENSE>
-GitHub Repository <https://github.com/allenai/python-package-template>
+License <https://raw.githubusercontent.com/caomingpei/hidir/main/LICENSE>
+GitHub Repository <https://github.com/caomingpei/hidir>
 ```
 
 ## Indices and tables

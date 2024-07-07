@@ -1,8 +1,16 @@
+from __future__ import annotations
+
 import os
 import shutil
 
-from .utils import prevent_indexing, predict_max_depth, get_identifier, split_to_folder, SUPPORTED_STRATEGY
 from .exceptions import NotSupportedError
+from .utils import (
+    SUPPORTED_STRATEGY,
+    get_identifier,
+    predict_max_depth,
+    prevent_indexing,
+    split_to_folder,
+)
 
 
 class DirectoryManager:
@@ -13,7 +21,6 @@ class DirectoryManager:
 
         self.strategy = strategy
         self.max_depth = predict_max_depth(files_predict, strategy)
-        self.folders = {}
         if clear_index:
             prevent_indexing(root)
 
@@ -33,7 +40,7 @@ class DirectoryManager:
         folder_path = os.path.join(self.root, *paths)
         return folder_path
 
-    def check_file(self, file_name: str) -> str:
+    def check_file(self, file_name: str) -> str | None:
         """Check for a file by its name and return its path if it exists."""
         target_file = os.path.join(self.get_base_path(file_name), file_name)
         return target_file if os.path.exists(target_file) else None
@@ -51,9 +58,9 @@ class DirectoryManager:
         target_folder = self.get_base_path(file_name)
         dst_path = os.path.join(target_folder, file_name)
 
-        if operation == 'move':
+        if operation == "move":
             shutil.move(file_path, dst_path)
-        elif operation == 'copy':
+        elif operation == "copy":
             shutil.copy(file_path, dst_path)
         else:
             raise ValueError(f"Unsupported operation: {operation}")

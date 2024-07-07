@@ -1,37 +1,33 @@
-import os
-import math
-import platform
 import hashlib
+import math
+import os
+import platform
+
 from .exceptions import NotSupportedError
 
-SUPPORTED_STRATEGY = [
-    "SHA-256",
-    "DCC"
-]
+SUPPORTED_STRATEGY = ["SHA-256", "DCC"]
 
-SUPPORTED_FORMAT = [
-    "name"
-]
+SUPPORTED_FORMAT = ["name"]
 
 
 def _prevent_indexing_windows(folder_path: str):
-    desktop_ini_path = os.path.join(folder_path, 'desktop.ini')
-    with open(desktop_ini_path, 'w') as f:
-        f.write('[.ShellClassInfo]\nNoIndex=1\n')
+    desktop_ini_path = os.path.join(folder_path, "desktop.ini")
+    with open(desktop_ini_path, "w") as f:
+        f.write("[.ShellClassInfo]\nNoIndex=1\n")
     os.system(f'attrib +h +s "{desktop_ini_path}"')
 
 
 def _prevent_indexing_unix(folder_path: str):
-    metadata_never_index_path = os.path.join(folder_path, '.metadata_never_index')
-    with open(metadata_never_index_path, 'w') as f:
-        f.write('')
+    metadata_never_index_path = os.path.join(folder_path, ".metadata_never_index")
+    with open(metadata_never_index_path, "w") as f:
+        f.write("")
 
 
 def prevent_indexing(folder_path: str):
     system = platform.system()
-    if system == 'Windows':
+    if system == "Windows":
         _prevent_indexing_windows(folder_path)
-    elif system == 'Darwin' or system == 'Linux':
+    elif system == "Darwin" or system == "Linux":
         _prevent_indexing_unix(folder_path)
     else:
         raise NotImplementedError(f"Indexing prevention not implemented for {system}")
@@ -39,7 +35,7 @@ def prevent_indexing(folder_path: str):
 
 def cal_sha256(input_str: str) -> str:
     sha256_hash = hashlib.sha256()
-    input_bytes = input_str.encode('utf-8')
+    input_bytes = input_str.encode("utf-8")
     sha256_hash.update(input_bytes)
 
     return sha256_hash.hexdigest()
@@ -51,6 +47,7 @@ def get_identifier(input_str: str, strategy: str) -> str:
 
     if strategy == "SHA-256":
         return cal_sha256(input_str)
+    return ""
 
 
 def predict_max_depth(file_count, strategy) -> int:
@@ -63,8 +60,11 @@ def predict_max_depth(file_count, strategy) -> int:
         if file_count <= max_files_per_folder:
             return 0
 
-        depth = math.ceil(math.log(file_count / max_files_per_folder) / math.log(max_subfolders_per_folder))
+        depth = math.ceil(
+            math.log(file_count / max_files_per_folder) / math.log(max_subfolders_per_folder)
+        )
         return depth
+    return 0
 
 
 def split_to_folder(indentifier: str, depth: int) -> list:

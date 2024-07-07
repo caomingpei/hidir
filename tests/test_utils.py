@@ -1,6 +1,6 @@
 import pytest
 
-from hidir.utils import *
+from hidir.utils import cal_sha256, predict_max_depth, split_to_folder
 
 
 def test_cal_sha256():

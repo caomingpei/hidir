@@ -1,6 +1,6 @@
-from .version import VERSION, VERSION_SHORT
+from .exceptions import NotSupportedError
 from .handler import DirectoryManager
-from .exceptions import *
 from .utils import cal_sha256, prevent_indexing
+from .version import VERSION, VERSION_SHORT
 
-__all__ = ['DirectoryManager']
+__all__ = ["DirectoryManager"]
