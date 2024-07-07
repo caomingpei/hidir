@@ -45,7 +45,7 @@ class DirectoryManager:
         target_file = os.path.join(self.get_base_path(file_name), file_name)
         return target_file if os.path.exists(target_file) else None
 
-    def __ensure_folder_exists(self, file_name: str):
+    def ensure_folder_exists(self, file_name: str):
         """Ensure that the folder for a given file exists."""
         folder_path = self.get_base_path(file_name)
         if not os.path.exists(folder_path):
@@ -54,7 +54,7 @@ class DirectoryManager:
     def __move_or_copy_file(self, file_path: str, operation: str):
         """Move or copy a file to its designated folder based on the operation."""
         _, file_name = os.path.split(file_path)
-        self.__ensure_folder_exists(file_name)
+        self.ensure_folder_exists(file_name)
         target_folder = self.get_base_path(file_name)
         dst_path = os.path.join(target_folder, file_name)
 
