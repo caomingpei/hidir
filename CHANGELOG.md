@@ -7,5 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v0.0.2](https://github.com/allenai/python-package-template/releases/tag/v0.0.2) - 2024-07-08
+
 ## [v0.0.1](https://github.com/allenai/python-package-template/releases/tag/v0.0.1) - 2024-07-07
 - Initial release of HiDir.
